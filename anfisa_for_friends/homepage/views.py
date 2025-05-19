@@ -8,8 +8,11 @@ def index(request):
     template_name = 'homepage/index.html'
 
     ice_cream_list = IceCream.objects.values(
-        'id', 'title', 'description', 'category__title').filter(
-            is_published=True, is_on_main=True).order_by('title')[1:4]
+        'id', 'title', 'price', 'description').filter(
+            is_published=True,  # Сорт разрешён к публикации;
+            is_on_main=True,  # Сорт разрешён к публикации на главной странице;
+            category__is_published=True  # Категория разрешена к публикации.
+    )
     context = {
         'ice_cream_list': ice_cream_list,
     }
